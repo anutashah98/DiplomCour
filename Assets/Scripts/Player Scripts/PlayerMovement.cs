@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private float _waitBeforeShooting;
     private float _waitBeforMoving;
     private bool _canMove = true;
+    private bool _playerDied;
 
     private PlayerAnimation _playerAnimations;
     private PlayerShootingManager _playerShootingManager;
@@ -30,6 +31,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (_playerDied)
+            return;
+        
         HandleMovement();
         HandleAnimation();
         HandleFacingDirection();
@@ -80,6 +84,8 @@ public class PlayerMovement : MonoBehaviour
             _playerAnimations.SetFacingDirection(true);
         else if (_xAxis < 0)
             _playerAnimations.SetFacingDirection(false);
+        
+        
     }
 
     void StopMovement()
@@ -113,5 +119,18 @@ public class PlayerMovement : MonoBehaviour
             if (Time.time > _waitBeforeShooting)
                 Shoot();
         }
+    }
+
+    public void PlayerDied()
+    {
+        _playerDied = true;
+        
+        _playerAnimations.PlayAnimation(TagManager.DEATH_ANIMATION_NAME);
+        Invoke("DestroyPlayerAfterDelay", 2f);
+    }
+
+    private void DestroyPlayerAfterDelay()
+    {
+        Destroy(gameObject);
     }
 }    

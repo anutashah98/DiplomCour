@@ -35,7 +35,8 @@ public class Bullet : MonoBehaviour
     {
         if (col.CompareTag(TagManager.ENEMY_TAG))
         {
-            
+            col.GetComponent<EnemyHealth>().TakeDamage(_damageAmount);
+            Destroy(gameObject);
         }
     }
 }
