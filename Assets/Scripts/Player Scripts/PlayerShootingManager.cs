@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//слово Manager мусорное, не несёт смысловой нагрузки
 public class PlayerShootingManager : MonoBehaviour
 {
 

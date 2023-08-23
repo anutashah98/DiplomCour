@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//EnemyHealth и PlayerHealth почти одинаковые, можно вынести в один компонент
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private float _healthEnemy = 100f;
