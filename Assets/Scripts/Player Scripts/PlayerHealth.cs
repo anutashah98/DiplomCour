@@ -27,7 +27,7 @@ public class PlayerHealth : MonoBehaviour
         {
             _playerMovement.PlayerDied();
             
-            GameplayController._instance.RestartGame();
+            GameplayController._instance.RestartGame();//Игрок ничего не должен знать про геймплей контроллер, это не его ответственность, статика плохо
         }
 
         _playerHealthSlider.value = _healthPlayer;

@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _xAxis = Input.GetAxisRaw(TagManager.HORIZONTAL_AXIS);
         _yAxis = Input.GetAxisRaw(TagManager.VERTICAL_AXIS);
+        //Horizontal и Vertical довольно обычные, их в отдельные константы заносит не нужно
 
         if (!_canMove)
             return;
@@ -55,14 +56,17 @@ public class PlayerMovement : MonoBehaviour
         _tempPos.x += _xAxis * _moveSpeed * Time.deltaTime;
         _tempPos.y += _yAxis * _moveSpeed * Time.deltaTime;
 
-        if (_tempPos.x < _minBound_X)
-            _tempPos.x = _minBound_X;
-        if (_tempPos.x > _maxBound_X)
-            _tempPos.x = _maxBound_X;
-        if (_tempPos.y < _minBound_Y)
-            _tempPos.y = _minBound_Y;
-        if (_tempPos.y > _maxBound_Y)
-            _tempPos.y = _maxBound_Y;
+        //Делается проще через clamp
+        _tempPos.x = Mathf.Clamp(_tempPos.x, _minBound_X, _maxBound_X);
+        _tempPos.y = Mathf.Clamp(_tempPos.y, _minBound_Y, _maxBound_Y);
+        // if (_tempPos.x < _minBound_X)
+        //     _tempPos.x = _minBound_X;
+        // if (_tempPos.x > _maxBound_X)
+        //     _tempPos.x = _maxBound_X;
+        // if (_tempPos.y < _minBound_Y)
+        //     _tempPos.y = _minBound_Y;
+        // if (_tempPos.y > _maxBound_Y)
+        //     _tempPos.y = _maxBound_Y;
 
         transform.position = _tempPos;
     }
@@ -72,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
         if (!_canMove)
             return;
         
-        if (Mathf.Abs(_xAxis) > 0 || Mathf.Abs(_yAxis) > 0)
+        if (Mathf.Abs(_xAxis) > 0 || Mathf.Abs(_yAxis) > 0) //меняется на тернарный оператор
             _playerAnimations.PlayAnimation(TagManager.WALK_ANIMATION_NAME);
         else
             _playerAnimations.PlayAnimation(TagManager.IDLE_ANIMATION_NAME);
@@ -80,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleFacingDirection()
     {
-        if (_xAxis > 0)
+        if (_xAxis > 0)//можно просто передать результат в аругмент _xAxis > 0 
             _playerAnimations.SetFacingDirection(true);
         else if (_xAxis < 0)
             _playerAnimations.SetFacingDirection(false);
@@ -126,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
         _playerDied = true;
         
         _playerAnimations.PlayAnimation(TagManager.DEATH_ANIMATION_NAME);
-        Invoke("DestroyPlayerAfterDelay", 2f);
+        Invoke("DestroyPlayerAfterDelay", 2f);//можно заменить на корутину
     }
 
     private void DestroyPlayerAfterDelay()

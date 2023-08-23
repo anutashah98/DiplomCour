@@ -17,6 +17,7 @@ public class EnemyDamageArea : MonoBehaviour
     private void Awake()
     {
         _playerHealth = GameObject.FindWithTag(TagManager.PLAYER_TAG).GetComponent<PlayerHealth>();
+        //Можно заменить на 
         
         gameObject.SetActive(false);
     }
